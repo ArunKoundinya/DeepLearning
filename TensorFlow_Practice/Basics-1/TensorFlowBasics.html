@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>DeepLearning</title>
+<title>Deep Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../images/tensorflow.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">DeepLearning</span>
+    <span class="navbar-title">Deep Learning</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -131,6 +132,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/arunkoundinya0710/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
 </div>
@@ -146,10 +159,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-tensor-flow" id="toc-what-is-tensor-flow" class="nav-link active" data-scroll-target="#what-is-tensor-flow">What is tensor Flow?</a></li>
+  <li><a href="#tensorflow-basics" id="toc-tensorflow-basics" class="nav-link active" data-scroll-target="#tensorflow-basics">TensorFlow Basics</a>
+  <ul class="collapse">
+  <li><a href="#what-is-tensor-flow" id="toc-what-is-tensor-flow" class="nav-link" data-scroll-target="#what-is-tensor-flow">What is tensor Flow?</a></li>
   <li><a href="#basics-unit-in-tensorflow-framework---tensor" id="toc-basics-unit-in-tensorflow-framework---tensor" class="nav-link" data-scroll-target="#basics-unit-in-tensorflow-framework---tensor">Basics Unit in TensorFlow Framework - Tensor</a></li>
   <li><a href="#creating-tensors" id="toc-creating-tensors" class="nav-link" data-scroll-target="#creating-tensors">Creating Tensors</a></li>
-  <li><a href="#basic-tensor-operations" id="toc-basic-tensor-operations" class="nav-link" data-scroll-target="#basic-tensor-operations">Basic Tensor Operations</a></li>
+  <li><a href="#basic-tensor-operations" id="toc-basic-tensor-operations" class="nav-link" data-scroll-target="#basic-tensor-operations">Basic Tensor Operations</a>
+  <ul class="collapse">
+  <li><a href="#typecasting" id="toc-typecasting" class="nav-link" data-scroll-target="#typecasting">TypeCasting</a></li>
+  <li><a href="#indexing" id="toc-indexing" class="nav-link" data-scroll-target="#indexing">Indexing</a></li>
+  <li><a href="#expanding-a-matrix" id="toc-expanding-a-matrix" class="nav-link" data-scroll-target="#expanding-a-matrix">Expanding a matrix</a></li>
+  <li><a href="#tensor-aggregation" id="toc-tensor-aggregation" class="nav-link" data-scroll-target="#tensor-aggregation">Tensor Aggregation</a></li>
+  <li><a href="#matrix-with-all-oneszeroes-and-identity" id="toc-matrix-with-all-oneszeroes-and-identity" class="nav-link" data-scroll-target="#matrix-with-all-oneszeroes-and-identity">Matrix with all ones,zeroes and identity</a></li>
+  <li><a href="#reshaping-and-transposing-tensors" id="toc-reshaping-and-transposing-tensors" class="nav-link" data-scroll-target="#reshaping-and-transposing-tensors">Reshaping and Transposing Tensors</a></li>
+  <li><a href="#distributions" id="toc-distributions" class="nav-link" data-scroll-target="#distributions">Distributions</a></li>
+  <li><a href="#mathematical-operations" id="toc-mathematical-operations" class="nav-link" data-scroll-target="#mathematical-operations">Mathematical Operations</a></li>
+  <li><a href="#matrix-multiplications" id="toc-matrix-multiplications" class="nav-link" data-scroll-target="#matrix-multiplications">Matrix Multiplications</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -160,12 +187,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><a href="https://colab.research.google.com/github/ArunKoundinya/DeepLearning/blob/main/TensorFlow_Practice/Basics-1/TensorFlowBasics.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
-<p>#TensorFlow Basics</p>
+<section id="tensorflow-basics" class="level1">
+<h1>TensorFlow Basics</h1>
 <div id="cell-2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="what-is-tensor-flow" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-tensor-flow">What is tensor Flow?</h3>
+<section id="what-is-tensor-flow" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-tensor-flow">What is tensor Flow?</h2>
 <p>Tensor flow is deep learning framework developed by Google in 2011 and made it publicly available in the year 2015.</p>
 <p>It is flexible, scalable solutio that enable us to build models with the existing frameworks.</p>
 <p>It is like sci-kit learn library but more advanced and flexible as we can custom build our own neural network.</p>
@@ -176,13 +204,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="basics-unit-in-tensorflow-framework---tensor" class="level3">
-<h3 class="anchored" data-anchor-id="basics-unit-in-tensorflow-framework---tensor">Basics Unit in TensorFlow Framework - Tensor</h3>
+<section id="basics-unit-in-tensorflow-framework---tensor" class="level2">
+<h2 class="anchored" data-anchor-id="basics-unit-in-tensorflow-framework---tensor">Basics Unit in TensorFlow Framework - Tensor</h2>
 <p>Tensors are multi-dimensional arrays designed for numerical data representation; although they share some similarities with NumPy arrays, they possess certain unique features that give them an advantage in deep learning tasks. One of these key advantages is their ability to utilize hardware acceleration from GPUs and TPUs to significantly speed up computational operations, which is especially useful when working with input data such as images, text, and videos.</p>
 <p>In simple words “ML” needs numbers; In case of large dimensions we need matrices. These matrices are called tensors. As these are specially designed to use hardware capabilities to accelerate learnings.</p>
 </section>
-<section id="creating-tensors" class="level3">
-<h3 class="anchored" data-anchor-id="creating-tensors">Creating Tensors</h3>
+<section id="creating-tensors" class="level2">
+<h2 class="anchored" data-anchor-id="creating-tensors">Creating Tensors</h2>
 <div id="cell-7" class="cell" data-outputid="6555b23c-5835-4701-86c5-5ba89b4e8f0a" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tf.constant(<span class="dv">1</span>, shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
@@ -240,8 +268,8 @@ The rank of rank9tensor is  tf.Tensor(9, shape=(), dtype=int32)</code></pre>
 </div>
 </div>
 </section>
-<section id="basic-tensor-operations" class="level3">
-<h3 class="anchored" data-anchor-id="basic-tensor-operations">Basic Tensor Operations</h3>
+<section id="basic-tensor-operations" class="level2">
+<h2 class="anchored" data-anchor-id="basic-tensor-operations">Basic Tensor Operations</h2>
 <div id="cell-17" class="cell" data-outputid="4f190f70-98b8-4a53-f87a-141cf202116c" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tf.constant(<span class="fl">1.1</span>, shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
@@ -250,8 +278,8 @@ array([[1.1, 1.1],
        [1.1, 1.1]], dtype=float32)&gt;</code></pre>
 </div>
 </div>
-<section id="typecasting" class="level4">
-<h4 class="anchored" data-anchor-id="typecasting">TypeCasting</h4>
+<section id="typecasting" class="level3">
+<h3 class="anchored" data-anchor-id="typecasting">TypeCasting</h3>
 <p>The moment we kept 1.1 the data-type has changed to float; Lets check how to typecast integer to float and vice versa</p>
 <div id="cell-19" class="cell" data-outputid="0f542a28-fc2a-4046-cdd0-8e6fb927d0f5" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x_int <span class="op">=</span> tf.constant(<span class="dv">1</span>, shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
@@ -273,8 +301,8 @@ tf.Tensor(
 </div>
 </div>
 </section>
-<section id="indexing" class="level4">
-<h4 class="anchored" data-anchor-id="indexing">Indexing</h4>
+<section id="indexing" class="level3">
+<h3 class="anchored" data-anchor-id="indexing">Indexing</h3>
 <p>Similar to numpy array we can do indexing for the tensors</p>
 <div id="cell-21" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span>  tf.constant([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -300,8 +328,8 @@ array([[1, 2, 3],
 </div>
 </div>
 </section>
-<section id="expanding-a-matrix" class="level4">
-<h4 class="anchored" data-anchor-id="expanding-a-matrix">Expanding a matrix</h4>
+<section id="expanding-a-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="expanding-a-matrix">Expanding a matrix</h3>
 <div id="cell-26" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span>  tf.constant([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -335,7 +363,9 @@ tf.Tensor(
   [6]]], shape=(2, 3, 1), dtype=int32)</code></pre>
 </div>
 </div>
-<p>Tensor Aggregation</p>
+</section>
+<section id="tensor-aggregation" class="level3">
+<h3 class="anchored" data-anchor-id="tensor-aggregation">Tensor Aggregation</h3>
 <div id="cell-30" class="cell" data-outputid="211e574d-238c-4998-cea1-81230cda7187" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="52">
@@ -361,8 +391,8 @@ Average of the numbers are  3</code></pre>
 </div>
 </div>
 </section>
-<section id="matrix-with-all-oneszeroes-and-identity" class="level4">
-<h4 class="anchored" data-anchor-id="matrix-with-all-oneszeroes-and-identity">Matrix with all ones,zeroes and identity</h4>
+<section id="matrix-with-all-oneszeroes-and-identity" class="level3">
+<h3 class="anchored" data-anchor-id="matrix-with-all-oneszeroes-and-identity">Matrix with all ones,zeroes and identity</h3>
 <div id="cell-34" class="cell" data-outputid="e52a6223-30d0-4b18-b18f-a041dbd0272b" data-execution_count="58">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span>  tf.ones([<span class="dv">2</span>,<span class="dv">3</span>])</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z)</span>
@@ -398,8 +428,8 @@ tf.Tensor(
 </div>
 </div>
 </section>
-<section id="reshaping-and-transposing-tensors" class="level4">
-<h4 class="anchored" data-anchor-id="reshaping-and-transposing-tensors">Reshaping and Transposing Tensors</h4>
+<section id="reshaping-and-transposing-tensors" class="level3">
+<h3 class="anchored" data-anchor-id="reshaping-and-transposing-tensors">Reshaping and Transposing Tensors</h3>
 <div id="cell-36" class="cell" data-outputid="4376bc4e-1d84-4bfa-c5e5-64506dbf9664" data-execution_count="61">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>x_initial <span class="op">=</span> tf.constant(<span class="dv">1</span>, shape<span class="op">=</span>(<span class="dv">4</span>,<span class="dv">3</span>))</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x_initial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -466,8 +496,8 @@ array([[1, 1, 1, 1],
 </div>
 <p>The initial shape of <code>(4,3)</code> got changed to <code>(3,4)</code></p>
 </section>
-<section id="distrbutions" class="level4">
-<h4 class="anchored" data-anchor-id="distrbutions">Distrbutions</h4>
+<section id="distributions" class="level3">
+<h3 class="anchored" data-anchor-id="distributions">Distributions</h3>
 <div id="cell-45" class="cell" data-outputid="7684f587-ed7c-4f1e-e360-8fe1fce686e2" data-execution_count="70">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>x1  <span class="op">=</span> tf.random.normal((<span class="dv">3</span>,<span class="dv">3</span>))</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x1)</span>
@@ -499,8 +529,8 @@ tf.Tensor(
 </div>
 </div>
 </section>
-<section id="mathematical-operations" class="level4">
-<h4 class="anchored" data-anchor-id="mathematical-operations">Mathematical Operations</h4>
+<section id="mathematical-operations" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-operations">Mathematical Operations</h3>
 <ul>
 <li>Addition</li>
 <li>Subtraction</li>
@@ -600,8 +630,8 @@ array([[-0.8043462 ,  1.1934612 ,  0.7599131 ],
 </div>
 </div>
 </section>
-<section id="matrix-multiplications" class="level4">
-<h4 class="anchored" data-anchor-id="matrix-multiplications">Matrix Multiplications</h4>
+<section id="matrix-multiplications" class="level3">
+<h3 class="anchored" data-anchor-id="matrix-multiplications">Matrix Multiplications</h3>
 <div id="cell-53" class="cell" data-outputid="42de8703-84e9-4cc6-83ef-f70a71b7a2f2" data-execution_count="81">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>x4_new <span class="op">=</span> tf.random.normal((<span class="dv">3</span>,<span class="dv">2</span>))</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>y4_new <span class="op">=</span> tf.random.normal((<span class="dv">2</span>,<span class="dv">3</span>))</span>
@@ -624,8 +654,11 @@ array([[ 0.5675167 ,  0.29923582, -2.018334  ],
 </div>
 </div>
 <p>Two ways of matrix of multiplication in tensors; There is also a way using dot product; which we will discuss later :)</p>
+<script src="https://giscus.app/client.js" data-repo="ArunKoundinya/DeepLearning" data-repo-id="R_kgDOLhOfMA" data-category="General" data-category-id="DIC_kwDOLhOfMM4CeHeZ" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="dark_high_contrast" data-lang="en" crossorigin="anonymous" async="">
+</script>
 
 
+</section>
 </section>
 </section>
 
@@ -709,24 +742,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/ArunKoundinya\.github\.io\/DeepLearning\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -761,11 +776,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1040,6 +1051,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2024, Arun Koundinya Parasa</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This page is built with 💛 and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
 
 
 
