@@ -1,5 +1,23 @@
 ---
 title: "About"
+image: images/tensorflow.png
+about:
+  template: marquee
+  links:
+    - icon: github
+      text: Personal Blog 
+      href: https://arunkoundinya.github.io/CanvassAndAnalyze/
+    - icon: github
+      text: TidyTuesday
+      href: https://arunkoundinya.github.io/TidyTuesday/
+    - icon: github
+      text: AI Basics Vlogs
+      href: https://arunkoundinya.github.io/AIBasicswithAK/
+    - icon: github
+      text: Personal Portfolio
+      href: https://arunkoundinya.github.io
 ---
 
-About this site
+This site is dedicated for learnings on deep learning using tensor flow. 
+
+My other sites.
