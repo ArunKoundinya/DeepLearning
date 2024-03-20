@@ -1,5 +1,5 @@
 ---
-title: "DeepLearning"
+title: "Deep Learning"
 subtitle: "Learnings and Projects on Deep Learning"
 ---
 
@@ -14,5 +14,5 @@ The coding is done in python majorly using the following packages as of now:
 -   dfply { Similar to that of tidyverse of R }
 
 | Date          | Link for my learning                                                | Topic         | Comments                        |
-|-----------------|------------------|--------------------|-------------------|
+|------------------|------------------|-------------------|------------------|
 | 20th Mar 2024 | [Tensor Basics](TensorFlow_Practice/Basics-1/TensorFlowBasics.html) | Tensor Basics | My initial learnings on tensors |

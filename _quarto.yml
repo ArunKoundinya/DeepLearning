@@ -2,18 +2,29 @@ project:
   type: website
 
 website:
-  title: "DeepLearning"
+  title: "Deep Learning"
+  site-url: https://arunkoundinya.github.io/DeepLearning/
+  description: "LETS GET DEEP INTO IT"
+  favicon: "images/tensorflow.png"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
 
+    right: 
+      - icon: rss
+        href: index.xml
+      - icon: linkedin
+        href: https://www.linkedin.com/in/arunkoundinya0710/  
+
+  page-footer:
+    right: "This page is built with 💛 and [Quarto](https://quarto.org/)."
+    left: "&copy; Copyright 2024, Arun Koundinya Parasa"
+    background: "#36494E" 
+
 format:
   html:
     theme: sandstone
     css: styles.css
     toc: true
-
-
-
