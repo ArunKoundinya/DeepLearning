@@ -13,6 +13,7 @@ The coding is done in python majorly using the following packages as of now:
 -   plotnine { Similar to that of ggplot of R }
 -   dfply { Similar to that of tidyverse of R }
 
-| Date          | Link for my learning                                                | Topic         | Comments                        |
+| Date          | Link for my learning                           | Topic           | Comments                          |
 |------------------|------------------|-------------------|------------------|
-| 20th Mar 2024 | [Tensor Basics](posts/tensor-basic-part1.html) | Tensor Basics-1 | My initial learnings on tensors |
+| 20th Mar 2024 | [Tensor Basics](posts/tensor-basic-part1.html) | Tensor Basics-1 | My initial learnings on tensors   |
+| 21st Mar 2024 | Tensor Basics                                  | Tensor Basics-2 | Python Broadcasting using tensors |
