@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Arun Koundinya Parasa">
+<meta name="dcterms.date" content="2024-03-21">
+<meta name="description" content="My initial learnings on tensors">
 
-<title>Deep Learning</title>
+<title>Deep Learning - Tensor Flow Basics - 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,23 +60,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../images/tensorflow.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/tensorflow.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,17 +106,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Deep Learning</span>
     </a>
   </div>
@@ -124,17 +127,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="../index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -151,7 +154,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Tensor Flow Basics - 2</h1>
+                  <div>
+        <div class="description">
+          My initial learnings on tensors
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Tensor Basics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Arun Koundinya Parasa </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 21, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -169,11 +208,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
+
+<p>This article primarily discussed on importance of broadcasting and its easy of implementation using tensors.</p>
+<p><img src="image.jpeg" class="img-fluid"></p>
 <p><a href="https://colab.research.google.com/github/ArunKoundinya/DeepLearning/blob/main/posts/tensor-basic-part2.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
 <section id="tensor-flow-basics-part-2" class="level1">
 <h1>Tensor Flow Basics Part-2</h1>
@@ -240,17 +282,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<div id="cell-3" class="cell" data-outputid="db6856e1-4dd2-4541-be6a-25ede38563b7" data-execution_count="24">
+<div id="cell-6" class="cell" data-outputid="db6856e1-4dd2-4541-be6a-25ede38563b7" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tf.__version__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2.15.0</code></pre>
 </div>
 </div>
-<div id="cell-4" class="cell" data-execution_count="2">
+<div id="cell-7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x_new <span class="op">=</span> tf.constant(<span class="dv">1</span>,shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">3</span>),dtype<span class="op">=</span>tf.int8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-5" class="cell" data-execution_count="7">
+<div id="cell-8" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>y_new <span class="op">=</span> tf.constant(<span class="dv">2</span>,shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">3</span>),dtype<span class="op">=</span>tf.int8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -260,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Element Wise Operations</li>
 <li>Matrix Multiplicaitons</li>
 </ul>
-<div id="cell-7" class="cell" data-outputid="57f600a9-388a-4e69-a323-19f047d6ce70" data-execution_count="12">
+<div id="cell-10" class="cell" data-outputid="57f600a9-388a-4e69-a323-19f047d6ce70" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Addition:</span><span class="ch">\n</span><span class="st">"</span>, tf.add(x_new,y_new))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
@@ -283,7 +325,7 @@ Subtraction:
  </code></pre>
 </div>
 </div>
-<div id="cell-8" class="cell" data-outputid="f0dda9e8-42f7-4c3a-a0e8-c4be057a593d" data-execution_count="19">
+<div id="cell-11" class="cell" data-outputid="f0dda9e8-42f7-4c3a-a0e8-c4be057a593d" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Multiplication:</span><span class="ch">\n</span><span class="st">"</span>, tf.multiply(tf.random.normal(shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">3</span>)),tf.random.normal(shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">3</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Multiplication:
@@ -292,7 +334,7 @@ Subtraction:
  [ 0.29304612  0.08317164 -1.3320862 ]], shape=(2, 3), dtype=float32)</code></pre>
 </div>
 </div>
-<div id="cell-9" class="cell" data-outputid="36672ab3-132f-46b0-ad6c-3e3f332968ee" data-execution_count="25">
+<div id="cell-12" class="cell" data-outputid="36672ab3-132f-46b0-ad6c-3e3f332968ee" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrix Multiplication:</span><span class="ch">\n</span><span class="st">"</span>, tf.matmul(tf.random.normal(shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">3</span>)),tf.random.normal(shape<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">2</span>))))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
@@ -318,12 +360,12 @@ Matrix Multiplication:
 <p>Here’s a brief summary of how broadcasting works for addition and subtraction:</p>
 <p>Addition: If the shapes of the two tensors are different, TensorFlow compares their shapes element-wise, starting from the trailing dimensions. If the dimensions are compatible or one of the dimensions is 1, broadcasting can occur. For example, you can add a scalar to a matrix, and the scalar value will be added to every element of the matrix.</p>
 <p>Subtraction: Similar to addition, broadcasting allows you to subtract a scalar or a vector from a matrix, or subtract matrices of different shapes.</p>
-<div id="cell-11" class="cell" data-execution_count="28">
+<div id="cell-14" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> tf.random.normal(shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> tf.random.normal(shape<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-12" class="cell" data-outputid="ff7f50fd-b1a5-47dd-daae-37f5ec55925a" data-execution_count="31">
+<div id="cell-15" class="cell" data-outputid="ff7f50fd-b1a5-47dd-daae-37f5ec55925a" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x1:</span><span class="ch">\n</span><span class="st">"</span>,x1)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
@@ -341,7 +383,7 @@ x2:
  [1.0277312 ]], shape=(2, 1), dtype=float32)</code></pre>
 </div>
 </div>
-<div id="cell-13" class="cell" data-outputid="1aa2363d-e5e1-41ba-a064-be48a4204d69" data-execution_count="32">
+<div id="cell-16" class="cell" data-outputid="1aa2363d-e5e1-41ba-a064-be48a4204d69" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tf.broadcast_to(x2, [<span class="dv">2</span>, <span class="dv">3</span>])   <span class="co">### Broadcasting internally</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="32">
 <pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
@@ -349,7 +391,7 @@ array([[0.10113019, 0.10113019, 0.10113019],
        [1.0277312 , 1.0277312 , 1.0277312 ]], dtype=float32)&gt;</code></pre>
 </div>
 </div>
-<div id="cell-14" class="cell" data-outputid="e6ac1e11-e6ee-42ce-9027-f2c44c8c310d" data-execution_count="33">
+<div id="cell-17" class="cell" data-outputid="e6ac1e11-e6ee-42ce-9027-f2c44c8c310d" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tf.add(x1,x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
 <pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
@@ -357,7 +399,7 @@ array([[ 0.49411017, -0.02698404, -0.50361305],
        [ 1.3354614 ,  2.4353833 ,  0.45498353]], dtype=float32)&gt;</code></pre>
 </div>
 </div>
-<div id="cell-15" class="cell" data-outputid="04901c9e-f68a-400e-b598-decf708bf2cf" data-execution_count="36">
+<div id="cell-18" class="cell" data-outputid="04901c9e-f68a-400e-b598-decf708bf2cf" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tf.subtract(x1,x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="36">
 <pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
@@ -367,11 +409,11 @@ array([[ 0.2918498 , -0.22924441, -0.7058734 ],
 </div>
 <p>In the above examples we have seen that broadcasting of same tensor dimension i.e.; of two dimensional.</p>
 <p>Below, we will see the beauty of broadcasting of different dimensions.</p>
-<div id="cell-17" class="cell" data-execution_count="48">
+<div id="cell-20" class="cell" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x3 <span class="op">=</span> tf.random.normal(shape<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)) <span class="co">#3d tensor</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x4 <span class="op">=</span> tf.random.normal(shape<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">1</span>)) <span class="co">#2d tensor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-18" class="cell" data-outputid="ed6eefae-e7c3-4f82-af84-10dffe4fe3b2" data-execution_count="49">
+<div id="cell-21" class="cell" data-outputid="ed6eefae-e7c3-4f82-af84-10dffe4fe3b2" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tf.add(x3,x4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="49">
 <pre><code>&lt;tf.Tensor: shape=(2, 2, 2), dtype=float32, numpy=
@@ -382,7 +424,7 @@ array([[[-1.0228443 ,  0.34588122],
         [ 1.572252  ,  1.6189265 ]]], dtype=float32)&gt;</code></pre>
 </div>
 </div>
-<div id="cell-19" class="cell" data-outputid="571549b7-105c-4b5d-f836-38fcec4db5d3" data-execution_count="50">
+<div id="cell-22" class="cell" data-outputid="571549b7-105c-4b5d-f836-38fcec4db5d3" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tf.broadcast_to(x4, [<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>])   <span class="co">### Broadcasting internally</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="50">
 <pre><code>&lt;tf.Tensor: shape=(2, 2, 2), dtype=float32, numpy=
