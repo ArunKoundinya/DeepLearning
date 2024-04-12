@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/tensor_math_operations/index.html",
       "/posts/shallow_to_multi_linear/index.html",
       "/posts/shallow-linear-model/index.html",
       "/posts/tensor-basics-part2/index.html",
