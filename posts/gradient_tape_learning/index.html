@@ -257,7 +257,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="first-derivate-with-two-variables" class="level3">
 <h3 class="anchored" data-anchor-id="first-derivate-with-two-variables">1.2. First Derivate with two variables</h3>
-<div id="cell-12" class="cell" data-outputid="44e0a462-8036-492a-c498-b237eaf0e3ad" data-execution_count="5">
+<p>When calculating two derivative it is mandatory to define as <code>persistent=True</code></p>
+<div id="cell-13" class="cell" data-outputid="44e0a462-8036-492a-c498-b237eaf0e3ad" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tf.constant(<span class="fl">20.0</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> tf.constant(<span class="fl">10.0</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -274,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 WARNING:tensorflow:Calling GradientTape.gradient on a persistent tape inside its context is significantly less efficient than calling it outside the context (it causes the gradient ops to be recorded on the tape, leading to increased CPU and memory usage). Only call GradientTape.gradient inside the context if you actually want to trace the gradient in order to compute higher order derivatives.</code></pre>
 </div>
 </div>
-<div id="cell-13" class="cell" data-outputid="508be824-b9e5-4273-9342-9c4e0db971ad" data-execution_count="6">
+<div id="cell-14" class="cell" data-outputid="508be824-b9e5-4273-9342-9c4e0db971ad" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -289,7 +290,7 @@ tf.Tensor(20.0, shape=(), dtype=float32)</code></pre>
 <section id="using-tf.constant---no-output" class="level4">
 <h4 class="anchored" data-anchor-id="using-tf.constant---no-output">1.3.1. Using tf.constant - No output</h4>
 <p>We when remove <code>tape.watch(x)</code> it is important for us to define as <code>tf.Variable</code> as gradient needs to be calculated iteratively at that point</p>
-<div id="cell-18" class="cell" data-execution_count="7">
+<div id="cell-19" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tf.constant(<span class="fl">20.0</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> tf.constant(<span class="fl">10.0</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -297,7 +298,7 @@ tf.Tensor(20.0, shape=(), dtype=float32)</code></pre>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> x <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> b <span class="op">**</span> <span class="dv">2</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>dy_dx, dy_db <span class="op">=</span> tape.gradient(y, [x, b])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-19" class="cell" data-outputid="e1b4a652-912e-4222-945d-b7de72cd8ab8" data-execution_count="8">
+<div id="cell-20" class="cell" data-outputid="e1b4a652-912e-4222-945d-b7de72cd8ab8" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -309,7 +310,7 @@ None</code></pre>
 <section id="using-tf.variable---output" class="level4">
 <h4 class="anchored" data-anchor-id="using-tf.variable---output">1.3.2. Using tf.Variable - Output</h4>
 <p>Also, using simpler code we can see we can pass variables in a list</p>
-<div id="cell-22" class="cell" data-execution_count="9">
+<div id="cell-23" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tf.Variable(<span class="fl">20.0</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> tf.Variable(<span class="fl">10.0</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -317,7 +318,7 @@ None</code></pre>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> x <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> b <span class="op">**</span> <span class="dv">2</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>dy_dx, dy_db <span class="op">=</span> tape.gradient(y, [x, b])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-23" class="cell" data-outputid="127ce159-9fb9-4475-a3f7-be8dfdbf4fe1" data-execution_count="10">
+<div id="cell-24" class="cell" data-outputid="127ce159-9fb9-4475-a3f7-be8dfdbf4fe1" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -333,7 +334,7 @@ tf.Tensor(20.0, shape=(), dtype=float32)</code></pre>
 <section id="wrong-indentation-of-code" class="level3">
 <h3 class="anchored" data-anchor-id="wrong-indentation-of-code">2.1. Wrong indentation of code</h3>
 <p>The issue with the below is code is about code <code>indentation</code> when we need to calculate second derivative.</p>
-<div id="cell-27" class="cell" data-execution_count="11">
+<div id="cell-28" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tf.Variable(<span class="fl">20.0</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> tf.Variable(<span class="fl">10.0</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -343,7 +344,7 @@ tf.Tensor(20.0, shape=(), dtype=float32)</code></pre>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>dy_dx <span class="op">=</span> tape1.gradient(y, x)</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>dy_dx_1 <span class="op">=</span> tape2.gradient(dy_dx, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-28" class="cell" data-outputid="a5d7cd5b-05b4-4050-fb88-bb0e622789ab" data-execution_count="12">
+<div id="cell-29" class="cell" data-outputid="a5d7cd5b-05b4-4050-fb88-bb0e622789ab" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -354,7 +355,7 @@ None</code></pre>
 </section>
 <section id="with-right-indentation-of-code" class="level3">
 <h3 class="anchored" data-anchor-id="with-right-indentation-of-code">2.2. With right indentation of code</h3>
-<div id="cell-30" class="cell" data-execution_count="13">
+<div id="cell-31" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tf.Variable(<span class="fl">20.0</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> tf.Variable(<span class="fl">10.0</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -364,7 +365,7 @@ None</code></pre>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  dy_dx <span class="op">=</span> tape1.gradient(y, x)</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>dy_dx_1 <span class="op">=</span> tape2.gradient(dy_dx, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-31" class="cell" data-outputid="6fe7d1f9-b82d-4ba7-ad86-42fb3ebf3e6a" data-execution_count="14">
+<div id="cell-32" class="cell" data-outputid="6fe7d1f9-b82d-4ba7-ad86-42fb3ebf3e6a" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -376,7 +377,7 @@ tf.Tensor(2.0, shape=(), dtype=float32)</code></pre>
 </section>
 <section id="second-order-derivate-for-array-of-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="second-order-derivate-for-array-of-numbers">2.3. Second Order Derivate for array of numbers</h3>
-<div id="cell-34" class="cell" data-execution_count="34">
+<div id="cell-35" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tf.Variable([<span class="op">-</span><span class="dv">3</span>,<span class="op">-</span><span class="dv">2</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],dtype<span class="op">=</span>tf.float32)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.GradientTape(persistent<span class="op">=</span><span class="va">True</span>) <span class="im">as</span> tape2:</span>
@@ -385,7 +386,7 @@ tf.Tensor(2.0, shape=(), dtype=float32)</code></pre>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  dy_dx <span class="op">=</span> tape1.gradient(y, x)</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>dy_dx_1 <span class="op">=</span> tape2.gradient(dy_dx, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-35" class="cell" data-outputid="675f7d56-9b2e-4c32-a6af-534dde764c10" data-execution_count="35">
+<div id="cell-36" class="cell" data-outputid="675f7d56-9b2e-4c32-a6af-534dde764c10" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dy_dx_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -403,7 +404,7 @@ tf.Tensor([2. 2. 2. 2. 2. 2. 2.], shape=(7,), dtype=float32)</code></pre>
 </figure>
 </div>
 <p>Here we will try to create a <code>gradient descent function</code> which will iterative to calculate the derivate and update the weights as per the learning rate.</p>
-<div id="cell-39" class="cell" data-execution_count="84">
+<div id="cell-40" class="cell" data-execution_count="84">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gradientdescent(learning_rate, w0):</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape:</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tf.math.square(w0)</span>
@@ -412,22 +413,22 @@ tf.Tensor([2. 2. 2. 2. 2. 2. 2.], shape=(7,), dtype=float32)</code></pre>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  w0 <span class="op">=</span> w0 <span class="op">-</span> learning_rate <span class="op">*</span> dy_dw0</span>
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> w0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-40" class="cell" data-execution_count="85">
+<div id="cell-41" class="cell" data-execution_count="85">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>w0 <span class="op">=</span> tf.Variable(<span class="fl">1.0</span>,dtype<span class="op">=</span>tf.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Below we are running for <code>10k</code> epochs to arrive at the minimal value given the function <code>y = x^2</code> which is nothing but a <code>parabola</code>.</p>
-<div id="cell-42" class="cell" data-execution_count="90">
+<div id="cell-43" class="cell" data-execution_count="90">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10000</span>):</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  w0 <span class="op">=</span> tf.Variable(gradientdescent(<span class="fl">0.01</span>,w0).numpy(),dtype<span class="op">=</span>tf.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-43" class="cell" data-outputid="582cb5db-6301-414b-f4af-5407edb169a2" data-execution_count="91">
+<div id="cell-44" class="cell" data-outputid="582cb5db-6301-414b-f4af-5407edb169a2" data-execution_count="91">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>w0.numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="91">
 <pre><code>5.803526e-37</code></pre>
 </div>
 </div>
 <p>After running for <code>10K</code> epochs we can clearly observe how we have arrived at almost <code>0</code> value.</p>
-<div id="cell-45" class="cell">
+<div id="cell-46" class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>w0 <span class="op">=</span> tf.Variable(<span class="fl">1.0</span>,dtype<span class="op">=</span>tf.float32)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> []</span>
