@@ -8,6 +8,7 @@ with open('best_model_traditional.pkl', 'rb') as f:
     loaded_model = pickle.load(f)
 
 
+cols= ['review_combined_lemma']    
 
 def main(): 
     st.title("Sentiment Predictor")
