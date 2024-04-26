@@ -4,7 +4,7 @@ import streamlit as st
 import pickle
 
 
-loaded_model = pickle.load(open('model.pkl', 'rb'))
+loaded_model = pickle.load(open('best_model_traditional.pkl', 'rb'))
 
 
 def main(): 
