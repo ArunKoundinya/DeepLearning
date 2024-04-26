@@ -4,7 +4,7 @@ import streamlit as st
 import pickle
 import warnings
 
-model = pickle.load(open('best_model_traditional.pkl', 'rb'))
+model = pickle.load(open('posts/deep-learning-project-msis/best_model_traditional.pkl', 'rb'))
 cols= ['review_combined_lemma']    
   
 def main(): 
