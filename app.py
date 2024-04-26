@@ -26,7 +26,7 @@ def main():
         #print(data)
         df=pd.DataFrame([list(data.values())], columns=cols)
 
-        prediction = model.predict(df['review_combined_lemma'].values)
+        prediction = loaded_model.predict(df['review_combined_lemma'].values)
 
         if prediction == 1:
             st.success('Positive!!')
