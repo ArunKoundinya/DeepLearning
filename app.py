@@ -4,8 +4,8 @@ import streamlit as st
 import pickle
 
 
-with open('best_model_traditional.pkl', 'rb') as f:
-    loaded_model = pickle.load(f)
+loaded_model = pickle.load(open('model.pkl', 'rb'))
+
 
 def main(): 
     st.title("Sentiment Predictor")
@@ -18,18 +18,6 @@ def main():
     
     review_combined_lemma1 = st.text_area('Area for textual entry')
     
-    if st.button("Predict"):
-        features = [[review_combined_lemma]]
-        data = {'review_combined_lemma': str(review_combined_lemma1)}
-        df=pd.DataFrame([list(data.values())], columns=cols)
-        
-        prediction = loaded_model.predict(df['review_combined_lemma'].values)
-        
-        if prediction == 1:
-            st.success('Positive!')
-        else:
-            st.success('Negative!')
-        
     
 if __name__=='__main__': 
     main()
