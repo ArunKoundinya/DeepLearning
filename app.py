@@ -16,7 +16,7 @@ def main():
     """
     st.markdown(html_temp, unsafe_allow_html = True)
     
-    review_combined_lemma1 = st.text_area('Area for textual entry')
+    review_combined_lemma = st.text_area('Area for textual entry')
     
     
 if __name__=='__main__': 
