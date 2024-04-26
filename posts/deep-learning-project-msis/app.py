@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st 
 import pickle
 
+model = pickle.load(open('https://github.com/ArunKoundinya/DeepLearning/blob/main/posts/deep-learning-project-msis/best_model_traditional.pkl', 'rb'))
 
 
 def main(): 
