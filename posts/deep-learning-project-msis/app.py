@@ -3,8 +3,9 @@ import pandas as pd
 import streamlit as st 
 import pickle
 
-model = pickle.load(open('https://github.com/ArunKoundinya/DeepLearning/blob/main/posts/deep-learning-project-msis/best_model_traditional.pkl', 'rb'))
 
+with open('best_model_traditional.pkl', 'rb') as f:
+    loaded_model = pickle.load(f)
 
 def main(): 
     st.title("Sentiment Predictor")
