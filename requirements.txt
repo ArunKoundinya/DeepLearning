@@ -3,4 +3,4 @@ numpy
 markdown
 folium
 jupyter
-scikit-learn
+scikit-learn==1.0.2
