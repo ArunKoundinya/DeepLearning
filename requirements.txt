@@ -3,4 +3,4 @@ numpy
 markdown
 folium
 jupyter
-
+scikit-learn
