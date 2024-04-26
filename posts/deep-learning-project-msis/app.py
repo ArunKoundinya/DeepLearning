@@ -4,7 +4,7 @@ import streamlit as st
 import pickle
 
 
-with open('best_model_traditional.pkl', 'rb') as f:
+with open('/mount/src/deeplearning/posts/deep-learning-project-msis/best_model_traditional.pkl', 'rb') as f:
     loaded_model = pickle.load(f)
 
 
