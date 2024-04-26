@@ -20,7 +20,7 @@ def main():
     
     if st.button("Predict"):
         features = [[review_combined_lemma]]
-        data = {'review_combined_lemma': str(review_combined_lemma)}
+        data = {'review_combined_lemma': str(review_combined_lemma1)}
         df=pd.DataFrame([list(data.values())], columns=cols)
         
         prediction = loaded_model.predict(df['review_combined_lemma'].values)
