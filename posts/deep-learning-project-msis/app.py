@@ -19,7 +19,8 @@ gdown.download('https://drive.google.com/uc?export=download&id=1VAvx8sUisk7YIwlx
 gdown.download('https://drive.google.com/uc?export=download&id=17sLthY7qwcqHvXnUxGuqmFEDFGlx1RII', 'model_bistm_pretrained.pkl', quiet=False)
 
 
-model_rfm = pickle.load(open('rfm_model', 'rb'))
+with open('rfm_model.pkl', 'rb') as f:
+    model_rfm = pickle.load(f)
 model_bistm = pickle.load(open('/mount/src/deeplearning/model_lstm_bi_embed.pkl', 'rb'))
 model_bistm_pretrained = pickle.load(open('/mount/src/deeplearning/model_lstm_bi_embed_pretrained.pkl', 'rb'))
 vocab_dict = pickle.load(open('/mount/src/deeplearning/vocab_dict.pkl', 'rb'))
