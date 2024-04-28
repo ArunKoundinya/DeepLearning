@@ -13,10 +13,11 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import gdown
 
-gdown.download('https://drive.google.com/file/d/1hz-Eq3OCOlD_v-LmcoQc3eHc3-iKJToF/view?usp=drive_link', 'rfm_model.pkl', quiet=False)
-gdown.download('https://drive.google.com/file/d/1-JWnw9HLzaWRjFby7Dl7oaBWEtIhsccI/view?usp=drive_link','vocab_dict.pkl',quiet=False)
-gdown.download('https://drive.google.com/file/d/1VAvx8sUisk7YIwlxcwF7wRVje-huePU6/view?usp=drive_link','model_lstm_bi_embed.pkl',quiet=False)
-gdown.download('https://drive.google.com/file/d/17sLthY7qwcqHvXnUxGuqmFEDFGlx1RII/view?usp=drive_link','model_bistm_pretrained.pkl',quiet=False)
+gdown.download('https://drive.google.com/uc?export=download&id=1hz-Eq3OCOlD_v-LmcoQc3eHc3-iKJToF','rfm_model.pkl', quiet=False)
+gdown.download('https://drive.google.com/uc?export=download&id=1-JWnw9HLzaWRjFby7Dl7oaBWEtIhsccI', 'vocab_dict.pkl', quiet=False)
+gdown.download('https://drive.google.com/uc?export=download&id=1VAvx8sUisk7YIwlxcwF7wRVje-huePU6', 'model_lstm_bi_embed.pkl', quiet=False)
+gdown.download('https://drive.google.com/uc?export=download&id=17sLthY7qwcqHvXnUxGuqmFEDFGlx1RII', 'model_bistm_pretrained.pkl', quiet=False)
+
 
 model_rfm = pickle.load(open('/mount/src/deeplearning/rfm_model', 'rb'))
 model_bistm = pickle.load(open('/mount/src/deeplearning/model_lstm_bi_embed.pkl', 'rb'))
