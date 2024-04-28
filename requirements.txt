@@ -6,3 +6,4 @@ jupyter
 scikit-learn==1.2.2
 tensorflow==2.15
 nltk==3.8.1
+gdown
