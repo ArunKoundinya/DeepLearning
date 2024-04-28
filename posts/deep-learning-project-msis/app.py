@@ -18,10 +18,10 @@ gdown.download('https://drive.google.com/file/d/1-JWnw9HLzaWRjFby7Dl7oaBWEtIhscc
 gdown.download('https://drive.google.com/file/d/1VAvx8sUisk7YIwlxcwF7wRVje-huePU6/view?usp=drive_link','model_lstm_bi_embed.pkl',quiet=False)
 gdown.download('https://drive.google.com/file/d/17sLthY7qwcqHvXnUxGuqmFEDFGlx1RII/view?usp=drive_link','model_bistm_pretrained.pkl',quiet=False)
 
-model_rfm = pickle.load(open('rfm_model', 'rb'))
-model_bistm = pickle.load(open('model_lstm_bi_embed.pkl', 'rb'))
-model_bistm_pretrained = pickle.load(open('model_lstm_bi_embed_pretrained.pkl', 'rb'))
-vocab_dict = pickle.load(open('vocab_dict.pkl', 'rb'))
+model_rfm = pickle.load(open('/mount/src/deeplearning/rfm_model', 'rb'))
+model_bistm = pickle.load(open('/mount/src/deeplearning/model_lstm_bi_embed.pkl', 'rb'))
+model_bistm_pretrained = pickle.load(open('/mount/src/deeplearning/model_lstm_bi_embed_pretrained.pkl', 'rb'))
+vocab_dict = pickle.load(open('/mount/src/deeplearning/vocab_dict.pkl', 'rb'))
 
 cols= ['review_title','review_text']
 
