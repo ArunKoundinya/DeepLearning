@@ -13,10 +13,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import gdown
 
-gdown.download('https://drive.google.com/uc?export=download&id=17sLthY7qwcqHvXnUxGuqmFEDFGlx1RII', 'model_bistm_pretrained.pkl', quiet=False)
-
-
-with open('rfm_model.pkl', 'rb') as f:
+with open('best_model_traditional.pkl', 'rb') as f:
     model_rfm = pickle.load(f)
 with open('model_lstm_bi_embed.pkl', 'rb') as f:
     model_bistm = pickle.load(f)
