@@ -12,13 +12,13 @@ from nltk.stem import WordNetLemmatizer
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-with open('best_model_traditional.pkl', 'rb') as f:
+with open('/mount/src/deeplearning/posts/deep-learning-project-msis/best_model_traditional.pkl', 'rb') as f:
     model_rfm = pickle.load(f)
-with open('model_lstm_bi_embed.pkl', 'rb') as f:
+with open('/mount/src/deeplearning/posts/deep-learning-project-msis/model_lstm_bi_embed.pkl', 'rb') as f:
     model_bistm = pickle.load(f)
-with open('model_lstm_bi_embed_pretrained.pkl', 'rb') as f:
+with open('/mount/src/deeplearning/posts/deep-learning-project-msis/model_lstm_bi_embed_pretrained.pkl', 'rb') as f:
     model_bistm_pretrained = pickle.load(f)
-with open('vocab_dict.pkl', 'rb') as f:
+with open('/mount/src/deeplearning/posts/deep-learning-project-msis/vocab_dict.pkl', 'rb') as f:
     vocab_dict = pickle.load(f)
 
 cols= ['review_title','review_text']
