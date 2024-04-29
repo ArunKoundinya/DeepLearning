@@ -11,7 +11,6 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-import gdown
 
 with open('best_model_traditional.pkl', 'rb') as f:
     model_rfm = pickle.load(f)
