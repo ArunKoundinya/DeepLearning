@@ -5,6 +5,8 @@ import pickle
 import warnings
 import nltk
 nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('wordnet')
 import string
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
