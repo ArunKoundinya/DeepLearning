@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/deep-learning-project-msis/index.html",
       "/posts/gradient_tape_learning/index.html",
       "/posts/tensor_math_operations/index.html",
       "/posts/shallow_to_multi_linear/index.html",

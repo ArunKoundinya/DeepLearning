@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arun Koundinya &amp; Patricia HoiKei Woo">
+<meta name="dcterms.date" content="2024-05-06">
+
+<title>Deep Learning - Amazon Reviews - Sentiment Classification</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/tensorflow.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Deep Learning</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ArunKoundinya/DeepLearning/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/arunkoundinya0710/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Amazon Reviews - Sentiment Classification</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">tensorflow</div>
+                <div class="quarto-category">classification</div>
+                <div class="quarto-category">sequencemodels</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Arun Koundinya &amp; Patricia HoiKei Woo </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 6, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-preprocessing" id="toc-data-preprocessing" class="nav-link" data-scroll-target="#data-preprocessing">Data Preprocessing</a></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a></li>
+  <li><a href="#traditional-machine-learning" id="toc-traditional-machine-learning" class="nav-link" data-scroll-target="#traditional-machine-learning">Traditional Machine Learning</a></li>
+  <li><a href="#neural-networks" id="toc-neural-networks" class="nav-link" data-scroll-target="#neural-networks">Neural Networks</a>
+  <ul class="collapse">
+  <li><a href="#preprocessing-in-neural-networks" id="toc-preprocessing-in-neural-networks" class="nav-link" data-scroll-target="#preprocessing-in-neural-networks">Preprocessing in neural networks</a></li>
+  <li><a href="#feed-forward-network" id="toc-feed-forward-network" class="nav-link" data-scroll-target="#feed-forward-network">Feed Forward Network</a></li>
+  <li><a href="#one-hot-encoding" id="toc-one-hot-encoding" class="nav-link" data-scroll-target="#one-hot-encoding">One Hot Encoding</a></li>
+  <li><a href="#neural-networks-with-embedding-layer" id="toc-neural-networks-with-embedding-layer" class="nav-link" data-scroll-target="#neural-networks-with-embedding-layer">Neural Networks with Embedding Layer</a></li>
+  <li><a href="#neural-networks-with-pre-trained-embedding-layer" id="toc-neural-networks-with-pre-trained-embedding-layer" class="nav-link" data-scroll-target="#neural-networks-with-pre-trained-embedding-layer">Neural Networks with Pre-Trained Embedding Layer</a></li>
+  <li><a href="#bi-lstms-with-attention-layer" id="toc-bi-lstms-with-attention-layer" class="nav-link" data-scroll-target="#bi-lstms-with-attention-layer">Bi-LSTMs with Attention Layer</a></li>
+  <li><a href="#custom-made-neural-network-block" id="toc-custom-made-neural-network-block" class="nav-link" data-scroll-target="#custom-made-neural-network-block">Custom Made Neural Network Block</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This article explores the use of deep learning models, such as feed forward neural networks (FFNN) and recurrent neural networks (RNN), such Bidirectional LSTM (BiLSTM) for sentiment analysis. This is one of our first project of deep learning where-in we have took this opportunity to build our basics strongly.</p>
+<p>For the purpose of analyzing sentiment trends over an extended period, we utilize a substantial dataset consisting of 3 Million Amazon product reviews. This data, sourced from the Stanford Network Analysis Project (SNAP), spans 18 years, providing a rich longitudinal view of consumer sentiments. However, for our modeling we could use only 0.1 Million of the data considering our system constraints.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/dataset.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="689"></p>
+</figure>
+</div>
+<p>Each review includes a numeric score representing the sentiment polarity. Negative review is represented as <code>class 1</code> while positive review is represented with <code>class 2</code>. This serves as a foundational metric for sentiment analysis</p>
+</section>
+<section id="data-preprocessing" class="level2">
+<h2 class="anchored" data-anchor-id="data-preprocessing">Data Preprocessing</h2>
+<p>In the preprocessing pipeline for sentiment analysis, the following steps were performed using nltk library : Punctuation Removal , Tokenization, Stopword Elimination and Lemmatization. Notably, the stopword list has been specifically curated to retain negations such as “not,” “no,” and other negatory contractions.</p>
+<div id="eda11cdf" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">'english'</span>)) <span class="op">-</span> { <span class="st">'not'</span>, <span class="st">'no'</span>, <span class="st">'couldn'</span>, <span class="st">"couldn't"</span>, <span class="st">"wouldn't"</span>, <span class="st">"shouldn't"</span>, <span class="st">"isn't"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                                                <span class="st">"aren't"</span>, <span class="st">"wasn't"</span>, <span class="st">"weren't"</span>, <span class="st">"don't"</span>, <span class="st">"doesn't"</span>, <span class="st">"hadn't"</span>, <span class="st">"hasn't"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">"won't"</span>, <span class="st">"can't"</span>, <span class="st">"mightn't"</span>,<span class="st">"needn't"</span>,<span class="st">"nor"</span>,<span class="st">"shouldn"</span>,<span class="st">"should've"</span>,<span class="st">"should"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">"weren"</span>,<span class="st">"wouldn"</span>,<span class="st">"mustn't"</span>,<span class="st">"mustn"</span>,<span class="st">"didn't"</span>,<span class="st">"didn"</span>,<span class="st">"doesn"</span>,<span class="st">"did"</span>,<span class="st">"does"</span>,<span class="st">"hadn"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">"hasn"</span>,<span class="st">"haven't"</span>,<span class="st">"haven"</span>,<span class="st">"needn"</span>,<span class="st">"shan't"</span>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess(text):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert text to lowercase</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lower()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove punctuation</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, string.punctuation))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tokenize text into words</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove stopwords</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [word <span class="cf">for</span> word <span class="kw">in</span> words <span class="cf">if</span> word <span class="kw">not</span> <span class="kw">in</span> stop_words]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lemmatize words</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    lemmatizer <span class="op">=</span> WordNetLemmatizer()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [lemmatizer.lemmatize(word) <span class="cf">for</span> word <span class="kw">in</span> words]</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Join the words back into a single string</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> <span class="st">' '</span>.join(words)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization">Data Visualization</h2>
+<p><img src="images/positivewordcloud.png" class="img-fluid quarto-figure quarto-figure-left" width="390"> <img src="images/negativewordcloud.png" class="img-fluid quarto-figure quarto-figure-left" width="390"></p>
+<p>This word cloud is characterized by a significant presence of highly positive terms such as “love,” “great,” “best,” “perfect,” and “excellent.” These words indicate strong satisfaction and enjoyment, commonly found in reviews that endorse a product. The words “highly recommend,” “amazing,” and “favorite” suggest that positive reviews often include recommendations and personal favoritism towards the products. The presence of words like “beautiful” and “enjoy” also emphasizes an emotional connection with the product.</p>
+<p>The negative word cloud features words such as “disappoint,” “waste,” “poor,” “bad,” and “problem.” These strongly negative terms are indicative of dissatisfaction and issues with the products. Terms like “return” and “refund” suggest actions taken by dissatisfied customers. Words like “boring,” “dull,” and “worst” reflect critical opinions about the product’s quality or entertainment value.</p>
+</section>
+<section id="traditional-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="traditional-machine-learning">Traditional Machine Learning</h2>
+<p>After conducting a thorough evaluation, we concluded that the Random Forest model outperformed SVM in multiple metrics, making it the preferred baseline model. This initial selection lays the foundation for further exploration and refinement of sentiment analysis techniques.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/besttraditionalml.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="683"></p>
+</figure>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Models</strong></th>
+<th><strong>Hyper Parameters</strong></th>
+<th><strong>Train Accuracy</strong></th>
+<th><strong>Validation Accuracy</strong></th>
+<th><strong>Test Accuracy</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Random Forest with Count Vectorizer</td>
+<td>Estimators : 200, Max Depth:20, Min Samples Split : 2</td>
+<td>82%</td>
+<td>79%</td>
+<td>79%</td>
+</tr>
+<tr class="even">
+<td>Random Forest with TF-IDF</td>
+<td>Estimators : 200, Max Depth:20, Min Samples Split : 5</td>
+<td>86%</td>
+<td>83%</td>
+<td>84%</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="neural-networks">Neural Networks</h2>
+<p>In our pursuit of advancing practical expertise in deep learning applications, we executed the following steps in a phased manner within the Neural Networks framework:</p>
+<section id="preprocessing-in-neural-networks" class="level3">
+<h3 class="anchored" data-anchor-id="preprocessing-in-neural-networks">Preprocessing in neural networks</h3>
+<div id="12d1a6c0" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a tokenizer with an out-of-vocabulary token</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> Tokenizer(oov_token<span class="op">=</span><span class="st">"&lt;UNK&gt;"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the tokenizer on the training data to build the vocabulary</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>tokenizer.fit_on_texts(X_train)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a special padding token to the word index with index 0</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>tokenizer.word_index[<span class="st">'&lt;PAD&gt;'</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the text data into sequences of token indices using the trained tokenizer</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>X_sequences_train <span class="op">=</span> tokenizer.texts_to_sequences(X_train)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>X_sequences <span class="op">=</span> tokenizer.texts_to_sequences(X)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Pad the sequences to ensure uniform length</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># maxlen is set to 100, meaning sequences longer than 100 tokens will be truncated, and shorter sequences will be padded</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pad_sequences(X_sequences_train, maxlen<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pad_sequences(X_sequences, maxlen<span class="op">=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="feed-forward-network" class="level3">
+<h3 class="anchored" data-anchor-id="feed-forward-network">Feed Forward Network</h3>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Models</strong></th>
+<th>Data Size</th>
+<th><strong>Train Accuracy</strong></th>
+<th><strong>Validation Accuracy</strong></th>
+<th><strong>Test Accuracy</strong></th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Feed Forward Network</td>
+<td>10,000 to 3.6 million</td>
+<td>51%</td>
+<td>51%</td>
+<td>51%</td>
+<td>Poor model</td>
+</tr>
+</tbody>
+</table>
+<p>The reason for its poor performance is likely due to the fact that the input words are represented as numerical numbers. In traditional machine learning, the representation of TF-IDF has shown better results. Therefore, the lesson learned is that we need to convert the input words into a better representation, such as one-hot encoding.</p>
+</section>
+<section id="one-hot-encoding" class="level3">
+<h3 class="anchored" data-anchor-id="one-hot-encoding">One Hot Encoding</h3>
+<p>Now, we have successfully converted the input data into one-hot vectors and we see that the number of parameters to be learned is also huge.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/onehot.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="591"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/onehotmodelparameters.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="594"></p>
+</figure>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Models</strong></th>
+<th>Data Size</th>
+<th><strong>Train Accuracy</strong></th>
+<th><strong>Validation Accuracy</strong></th>
+<th><strong>Test Accuracy</strong></th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Feed Forward Network with one hot encoding</td>
+<td>10,000</td>
+<td>System Crashed</td>
+<td>System Crashed</td>
+<td>System Crashed</td>
+<td>Sytem Crashed</td>
+</tr>
+</tbody>
+</table>
+<p>Immediately after this the system got crashed because of the size of vector and its computation even the computer size of 50 GB RAM could. not sustain.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/onehotsystemram.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>therefore, the lesson learned is that we need to convert the input words into a better representation, like an embedding layer and then we performed on different architectures to explore the better fit for the model.</p>
+</section>
+<section id="neural-networks-with-embedding-layer" class="level3">
+<h3 class="anchored" data-anchor-id="neural-networks-with-embedding-layer">Neural Networks with Embedding Layer</h3>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Models</strong></th>
+<th>Data Size</th>
+<th><strong>Train Accuracy</strong></th>
+<th><strong>Validation Accuracy</strong></th>
+<th><strong>Test Accuracy</strong></th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Feed Forward Network with Embedding Layer</td>
+<td>10,000</td>
+<td>100%</td>
+<td>85%</td>
+<td>85%</td>
+<td>Overfitting</td>
+</tr>
+<tr class="even">
+<td>GRU with Embedding Layer</td>
+<td>10,000</td>
+<td>100%</td>
+<td>80%</td>
+<td>80%</td>
+<td>Overfitting</td>
+</tr>
+<tr class="odd">
+<td>LSTM with Embedding Layer</td>
+<td>10,000</td>
+<td>100%</td>
+<td>80%</td>
+<td>80%</td>
+<td>Overfitting</td>
+</tr>
+<tr class="even">
+<td>Bi-LSTM with Embedding Layer</td>
+<td>10,000</td>
+<td>100%</td>
+<td>81%</td>
+<td>81%</td>
+<td>Overfitting</td>
+</tr>
+<tr class="odd">
+<td>Bi-LSTM with Embedding Layer</td>
+<td>100,000</td>
+<td>100%</td>
+<td>86%</td>
+<td>86%</td>
+<td>Overfitting</td>
+</tr>
+</tbody>
+</table>
+<p>The reason for overfitting is likely because, given the size of the data, the embedding layer is attempting to learn model parameters within the vocabulary of the input data. However, during validation and testing, there may be many out-of-vocabulary words, leading to underperformance. However, when we increased the dataset to 100K, the accuracy improved. The lesson learned is that if we can input the data with pre-trained embeddings learned on a larger corpus, we can achieve a better and more balanced model.</p>
+</section>
+<section id="neural-networks-with-pre-trained-embedding-layer" class="level3">
+<h3 class="anchored" data-anchor-id="neural-networks-with-pre-trained-embedding-layer">Neural Networks with Pre-Trained Embedding Layer</h3>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Models</strong></th>
+<th>Data Size</th>
+<th><strong>Train Accuracy</strong></th>
+<th><strong>Validation Accuracy</strong></th>
+<th><strong>Test Accuracy</strong></th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bi-LSTM with Pretrained twitter Embeddings of 50D</td>
+<td>10,000</td>
+<td>90%</td>
+<td>85%</td>
+<td>84%</td>
+<td>Decent Model</td>
+</tr>
+<tr class="even">
+<td>Bi-LSTM with Pretrained twitter Embeddings of 200D</td>
+<td>100,000</td>
+<td>94%</td>
+<td>87%</td>
+<td>85%</td>
+<td>Decent Model</td>
+</tr>
+</tbody>
+</table>
+<p>Given the success of pre-trained embeddings with larger dimensions, we aim to retain this learning and proceed to incorporate a more advanced architecture. The lesson we learned is that larger-dimensional embeddings capture richer attributes of words, which is beneficial. As part of our efforts to enhance the model’s learning, we decided to add an attention layer. This layer allows the model to focus on specific words, further improving its performance.</p>
+</section>
+<section id="bi-lstms-with-attention-layer" class="level3">
+<h3 class="anchored" data-anchor-id="bi-lstms-with-attention-layer">Bi-LSTMs with Attention Layer</h3>
+<p>We explored with three variants of attention. Couple of them are custom created and other is with Self Attention layer.</p>
+<div id="c4c719fc" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Custom Made Simple Attention Layer</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Attention(tf.keras.Model):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, units):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(Attention, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize the attention mechanism's parameters</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.W1 <span class="op">=</span> tf.keras.layers.Dense(units, activation<span class="op">=</span><span class="st">"tanh"</span>)  <span class="co"># Dense layer to compute attention scores</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.V <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">1</span>)  <span class="co"># Dense layer for the attention mechanism's weight calculation</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> call(<span class="va">self</span>, features):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute attention scores</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> <span class="va">self</span>.W1(features)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Apply softmax activation to obtain attention weights</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        attention_weights <span class="op">=</span> tf.nn.softmax(<span class="va">self</span>.V(score), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute context vector as the weighted sum of features</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        context_vector <span class="op">=</span> attention_weights <span class="op">*</span> features</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> context_vector</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="4bb8a563" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Custom Made Slightly Complicated Attention Layer</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Attention_Update(tf.keras.Model):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, units):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(Attention_Update, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize parameters for the attention mechanism</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.W1 <span class="op">=</span> tf.keras.layers.Dense(units, activation<span class="op">=</span><span class="st">"tanh"</span>)  <span class="co"># Dense layer to compute attention scores</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.V <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">1</span>)  <span class="co"># Dense layer for attention weight calculation</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> build(<span class="va">self</span>, input_shape):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize trainable weights for attention mechanism</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Wa <span class="op">=</span> <span class="va">self</span>.add_weight(name<span class="op">=</span><span class="st">"att_weight_1"</span>, shape<span class="op">=</span>(input_shape[<span class="op">-</span><span class="dv">1</span>], <span class="dv">8</span>),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                                  initializer<span class="op">=</span><span class="st">"normal"</span>)  <span class="co"># Weight matrix for context vector computation</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Wb <span class="op">=</span> <span class="va">self</span>.add_weight(name<span class="op">=</span><span class="st">"att_weight_2"</span>, shape<span class="op">=</span>(input_shape[<span class="op">-</span><span class="dv">1</span>], <span class="dv">8</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                                  initializer<span class="op">=</span><span class="st">"normal"</span>)  <span class="co"># Weight matrix for input features</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.b <span class="op">=</span> <span class="va">self</span>.add_weight(name<span class="op">=</span><span class="st">"att_bias_2"</span>, shape<span class="op">=</span>(input_shape[<span class="dv">1</span>], <span class="dv">8</span>),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                                 initializer<span class="op">=</span><span class="st">"zeros"</span>)  <span class="co"># Bias term for context vector computation</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(Attention_Update, <span class="va">self</span>).build(input_shape)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> call(<span class="va">self</span>, features):</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute attention scores</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> <span class="va">self</span>.W1(features)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Apply softmax activation to obtain attention weights</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        attention_weights <span class="op">=</span> tf.nn.softmax(<span class="va">self</span>.V(score), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute context vector as the weighted sum of features</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        context_vector <span class="op">=</span> attention_weights <span class="op">*</span> features</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the hidden state using attention mechanism</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        new_hidden_state <span class="op">=</span> tf.tanh(tf.matmul(context_vector, <span class="va">self</span>.Wa) <span class="op">+</span> tf.matmul(features, <span class="va">self</span>.Wb) <span class="op">+</span> <span class="va">self</span>.b)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> new_hidden_state</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f88f9e5c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define input layer with shape (100,)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">100</span>,))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an embedding layer with pre-trained weights</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># vocab_size: size of the vocabulary</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># output_dim: dimension of the embedding space</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># input_length: length of input sequences</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># weights: pre-trained embedding matrix</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># trainable: set to False to keep the pre-trained weights fixed during training</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>embedding_layer <span class="op">=</span> Embedding(input_dim<span class="op">=</span>vocab_size, output_dim<span class="op">=</span><span class="dv">200</span>, input_length<span class="op">=</span><span class="dv">100</span>, weights<span class="op">=</span>[embedding_matrix_twitter_200d], trainable<span class="op">=</span><span class="va">False</span>)(inputs)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply bidirectional LSTM to capture contextual information</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>bilstm <span class="op">=</span> Bidirectional(LSTM(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'tanh'</span>, return_sequences<span class="op">=</span><span class="va">True</span>))(embedding_layer)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply self-attention mechanism to focus on important features</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>context_vector <span class="op">=</span> SeqSelfAttention(attention_activation<span class="op">=</span><span class="st">'sigmoid'</span>)(bilstm)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply SimpleRNN to capture sequential patterns</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>simplernn <span class="op">=</span> SimpleRNN(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">"tanh"</span>)(context_vector)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Output layer with sigmoid activation for binary classification</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">"sigmoid"</span>)(simplernn)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the model</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>model_lstm_bi_embed_selfattention <span class="op">=</span> Model(inputs<span class="op">=</span>inputs, outputs<span class="op">=</span>output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Models</strong></th>
+<th>Data Size</th>
+<th><strong>Train Accuracy</strong></th>
+<th><strong>Validation Accuracy</strong></th>
+<th><strong>Test Accuracy</strong></th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bi-LSTM with Pretrained twitter Embeddings of 200D - Simple Attention</td>
+<td>100,000</td>
+<td>94%</td>
+<td>90%</td>
+<td>90%</td>
+<td>Good Model</td>
+</tr>
+<tr class="even">
+<td>Bi-LSTM with Pretrained twitter Embeddings of 200D - Slightly Complicated Attention</td>
+<td>100,000</td>
+<td>94%</td>
+<td>89%</td>
+<td>90%</td>
+<td>Good Model</td>
+</tr>
+<tr class="odd">
+<td>Bi-LSTM with Pretrained twitter Embeddings of 200D - Keras Self Attention Layer</td>
+<td>100,000</td>
+<td>94%</td>
+<td>90%</td>
+<td>90%</td>
+<td>Good Model</td>
+</tr>
+</tbody>
+</table>
+<p>All these models performed equally well; however, our intention is to create an even better model. Therefore, we proceeded to develop a custom model consisting of two bi-LSTMs with a simple attention layer, followed by an RNN, two feedforward networks, and finally, a softmax layer.</p>
+</section>
+<section id="custom-made-neural-network-block" class="level3">
+<h3 class="anchored" data-anchor-id="custom-made-neural-network-block">Custom Made Neural Network Block</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paste-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="484"></p>
+</figure>
+</div>
+<p>This Block we feel it can enhance sentence comprehension by learning relevant words and their dependencies within the sentence. It consists of several components that work together to achieve this goal:</p>
+<ul>
+<li><p>Combining Two Bi-LSTMs: This increases its complexity and enables it to learn sentence context in both forward and backward directions. This helps to capture a more comprehensive understanding of the text.</p></li>
+<li><p>Attention Layer: It focuses on relevant words within the sentence, allowing the model to concentrate on key information while disregarding irrelevant details. This mechanism helps to improve the overall accuracy of the model.</p></li>
+<li><p>Simple RNN: It helps to learn and capture relevant parameters based on context. This facilitates the understanding of word dependencies within the sentence and enables the model to achieve more accurate sentiment analysis.</p></li>
+</ul>
+<p>Notably, this block operates without a dense layer. Instead, it focuses on leveraging Bi-LSTMs, attention mechanisms, and simple RNNs to achieve effective sentence comprehension and sentiment analysis. However, dense layers can be introduced to the model to introduce more complexity and enable interactions between words and their attributes, thus improving overall comprehension and analysis.</p>
+<div id="a764f751" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define hyperparameters</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lstm_units <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>attention_units <span class="op">=</span> <span class="dv">96</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>rnn_units <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>dense_units <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.001</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define input layer with shape (100,)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">100</span>,))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an embedding layer with pre-trained weights</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>embedding_layer <span class="op">=</span> Embedding(input_dim<span class="op">=</span>vocab_size, output_dim<span class="op">=</span><span class="dv">200</span>, input_length<span class="op">=</span><span class="dv">100</span>, weights<span class="op">=</span>[embedding_matrix_twitter_200d], trainable<span class="op">=</span><span class="va">False</span>)(inputs)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply bidirectional LSTM layers with regularization</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>bilstm <span class="op">=</span> Bidirectional(LSTM(lstm_units, activation<span class="op">=</span><span class="st">'tanh'</span>, return_sequences<span class="op">=</span><span class="va">True</span>, kernel_regularizer<span class="op">=</span>l2(<span class="fl">0.0001</span>)))(embedding_layer)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>bilstm <span class="op">=</span> Bidirectional(LSTM(lstm_units, activation<span class="op">=</span><span class="st">'tanh'</span>, return_sequences<span class="op">=</span><span class="va">True</span>, kernel_regularizer<span class="op">=</span>l2(<span class="fl">0.0001</span>)))(bilstm)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply attention mechanism</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>context_vector <span class="op">=</span> Attention(attention_units)(bilstm)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply SimpleRNN layer with regularization</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>simplernn <span class="op">=</span> SimpleRNN(rnn_units, activation<span class="op">=</span><span class="st">"tanh"</span>, return_sequences<span class="op">=</span><span class="va">True</span>, kernel_regularizer<span class="op">=</span>l2(<span class="fl">0.0001</span>))(context_vector)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten the output for feedforward layers</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>flatten <span class="op">=</span> Flatten()(simplernn)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply two feedforward layers with regularization</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>ffn <span class="op">=</span> Dense(dense_units, activation<span class="op">=</span><span class="st">'relu'</span>, kernel_regularizer<span class="op">=</span>l2(<span class="fl">0.001</span>))(flatten)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>ffn <span class="op">=</span> Dense(dense_units, activation<span class="op">=</span><span class="st">'relu'</span>, kernel_regularizer<span class="op">=</span>l2(<span class="fl">0.001</span>))(ffn)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Output layer with sigmoid activation for binary classification</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">"sigmoid"</span>)(ffn)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the model</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>model_lstm_bi_embed_attention_complex_regularized_tuned <span class="op">=</span> Model(inputs<span class="op">=</span>inputs, outputs<span class="op">=</span>output)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile the model</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> keras.optimizers.Adam(learning_rate)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>model_lstm_bi_embed_attention_complex_regularized_tuned.<span class="bu">compile</span>(optimizer<span class="op">=</span>optimizer, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Print model summary</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>model_lstm_bi_embed_attention_complex_regularized_tuned.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Models</strong></th>
+<th>Data Size</th>
+<th><strong>Train Accuracy</strong></th>
+<th><strong>Validation Accuracy</strong></th>
+<th><strong>Test Accuracy</strong></th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Final Custom block model with hyper tuned parameters</td>
+<td>100K</td>
+<td>91%</td>
+<td>91%</td>
+<td>91%</td>
+<td>Balanced Model</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Neural networks, when fine-tuned, regularized, and expanded, possess a great capacity to arrive at a better model. While traditional machine learning approach has given us 85% accuracy, the inherent flexibility of neural networks enables us to create of more sophisticated/complicated models. These models we feel are better to capture intricate patterns within the data, ultimately leading to superior performance.</p>
+<p>We found great fulfillment in undertaking this project, prioritizing our learning journey beyond the confines of grading rubrics. It provided us with invaluable insights and a deeper understanding of the intricacies involved.</p>
+<p>Entire code can be downloaded from this <a href="https://github.com/ArunKoundinya/DeepLearning/blob/main/posts/deep-learning-project-msis/ProjectFiles.zip">link</a>.</p>
+<script src="https://giscus.app/client.js" data-repo="ArunKoundinya/DeepLearning" data-repo-id="R_kgDOLhOfMA" data-category="General" data-category-id="DIC_kwDOLhOfMM4CeHeZ" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="dark_high_contrast" data-lang="en" crossorigin="anonymous" async="">
+</script>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2024, Arun Koundinya Parasa</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This page is built with 💛 and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
