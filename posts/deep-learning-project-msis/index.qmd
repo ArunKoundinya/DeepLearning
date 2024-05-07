@@ -316,7 +316,9 @@ model_lstm_bi_embed_attention_complex_regularized_tuned.summary()
 
 Neural networks, when fine-tuned, regularized, and expanded, possess a great capacity to arrive at a better model. While traditional machine learning approach has given us 85% accuracy, the inherent flexibility of neural networks enables us to create of more sophisticated/complicated models. These models we feel are better to capture intricate patterns within the data, ultimately leading to superior performance.
 
-We found great fulfillment in undertaking this project, prioritizing our learning journey beyond the confines of grading rubrics. It provided us with invaluable insights and a deeper understanding of the intricacies involved,
+We found great fulfillment in undertaking this project, prioritizing our learning journey beyond the confines of grading rubrics. It provided us with invaluable insights and a deeper understanding of the intricacies involved.
+
+Entire code can be downloaded from this [link](https://github.com/ArunKoundinya/DeepLearning/blob/main/posts/deep-learning-project-msis/ProjectFiles.zip).
 
 ```{=html}
 <script src="https://giscus.app/client.js"
