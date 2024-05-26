@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/hugging_face_sentiment_classification/index.html",
       "/posts/deep-learning-project-msis/index.html",
       "/posts/gradient_tape_learning/index.html",
       "/posts/tensor_math_operations/index.html",
