@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/kaggle_vegetables_project/index.html",
       "/posts/tensorflow_important_functions/index.html",
       "/posts/hugging_face_sentiment_classification/index.html",
       "/posts/deep-learning-project-msis/index.html",
